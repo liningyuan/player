@@ -8,7 +8,7 @@ function playsound(freq=440,time=1000){
 	var real=new Float32Array(32);
 	var imag=new Float32Array(32);
 	//   for(var i=1;i<=31;++i)real[i]=i;
-	real[1]=-24.9;real[2]=-30.4;real[3]=-40.9;real[4]=-33;real[5]=-41.3;real[6]=-40;
+	real[1]=-23;real[2]=-30.4;real[3]=-40.9;real[4]=-33;real[5]=-41.3;real[6]=-40;
 	for(var i=1;i<=6;++i)real[i]=10**(real[i]/20);
 	for(var i=7;i<=8;++i)real[i]=real[i-1]*0.9;
 	//   24.9 26.4 -40.9 -33 -41.3 -40
@@ -47,10 +47,11 @@ console.log(texta);
 })(window.location.search);
 var plbtn=document.createElement("input");
 plbtn.type="button";
-plbtn.value="play";
-plbtn.style.cssText="width:100px;height:50px;position:absolute;top:0px;";
-document.body.append(plbtn);
+plbtn.value="play (Ctrl+Enter)";
+plbtn.style.cssText="width:120px;height:50px;display:block";
+document.body.insertBefore(plbtn,texta);
 plbtn.addEventListener("mousedown",playtext);
+window.addEventListener("keydown",function(e){if(e.keyCode==13&&e.ctrlKey)playtext()});
 function playtext(){
 	var s=texta.value;
 	s=(function(x){
@@ -60,7 +61,10 @@ function playtext(){
 				//settings
 				return;
 			}
-			if(x0[0]<'0'||x0[0]>'9')console.warn(x0);
+			if(x0[0]<'0'||x0[0]>'9'){
+				console.warn(x0);
+				return;
+			}
 			var i1=1,i2=x0.charCodeAt(0);
 			if(i2==45){
 				for(i2=0;(i1<x0.length)&&(x0[i1]>='0'&&x0[i1]<='9');++i1)i2=i2*10-x0.charCodeAt(i1)+48;
