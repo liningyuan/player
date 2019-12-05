@@ -23,24 +23,34 @@ function playsound(freq=440,time=1000){
 	osc.start();
 	gain.gain.setValueAtTime(1,audioctx.currentTime);
 	// gain.gain.linearRampToValueAtTime(0,time0*0.001+audioctx.currentTime);
-	gain.gain.setTargetAtTime(0,audioctx.currentTime,time*0.0003);
+	gain.gain.setTargetAtTime(0,audioctx.currentTime,time*0.0004);
 	setTimeout(function(){osc.stop();osc.disconnect();gain.disconnect();},time+0);
 	return;
 }
 function setplaysound(a,b,c){
 	setTimeout(()=>playsound(a,b),c);
 }
-// var keytable={'!':8,'@':9,'#':10,'$':11,'%':12,'^':13,'&':14,'*':15,'(':16,')':17,q:8,w:9,e:10,r:11,t:12,y:13,u:14,i:15,o:16,p:17,Q:1,W:2,E:3,R:4,T:5,Y:6,U:7,I:8,O:9,P:10};
+var bpm=120;
+var getfreq=(x)=>440*2**((x-69)/12);
+
 var texta=document.getElementById("txt");
 console.log(texta);
+(function(s){
+	if(s.length<3)return;
+	if(s[0]!='?')console.warn(s);
+	var i0=s.slice(1).split("&"),i1;
+	for(i1=0;i1<i0.length;++i1){
+		if(i0[i1].slice(0,5)=="init="){
+			texta.value=i0[i1].slice(5);
+		}
+	}
+})(window.location.search);
 var plbtn=document.createElement("input");
 plbtn.type="button";
 plbtn.value="play";
 plbtn.style.cssText="width:100px;height:50px;position:absolute;top:0px;";
 document.body.append(plbtn);
 plbtn.addEventListener("mousedown",playtext);
-var bpm=120;
-var getfreq=(x)=>440*2**((x-69)/12);
 function playtext(){
 	var s=texta.value;
 	s=(function(x){
@@ -79,7 +89,7 @@ function playtext(){
 		if(s[i1]<=0)continue;
 		for(i2=1;s[i1+i2]==-1;++i2);
 		// console.log(s[i1],i2,30000/bpm*i2);
-		setplaysound(getfreq(s[i1]),60000/bpm*i2,0.5*60000/bpm*i1);
+		setplaysound(getfreq(s[i1]),30000/bpm*i2,30000/bpm*i1);
 	}
 	return;
 }
