@@ -8,7 +8,7 @@ function playsound(freq=440,len=1000,start=0){
 	var real=new Float32Array(32);
 	var imag=new Float32Array(32);
 	//   for(var i=1;i<=31;++i)real[i]=i;
-	real[1]=-24.9;real[2]=-29.4;real[3]=-40.9;real[4]=-33;real[5]=-41.3;real[6]=-40;
+	real[1]=-24.9;real[2]=-30.4;real[3]=-40.9;real[4]=-33;real[5]=-41.3;real[6]=-40;
 	for(var i=1;i<=6;++i)real[i]=10**(real[i]/20);
 	for(var i=7;i<=8;++i)real[i]=real[i-1]*0.9;
 	//   24.9 26.4 -40.9 -33 -41.3 -40
@@ -65,6 +65,17 @@ document.body.insertBefore(plbtn,texta);
 document.body.insertBefore(inpb,texta);
 plbtn.addEventListener("mousedown",playtext);
 window.addEventListener("keydown",function(e){if(e.keyCode==13&&e.ctrlKey)playtext()});
+function addbtn(x1,x2){
+	var i1=document.createElement("input");
+	i1.type="button";
+	i1.value=x2;
+	i1.addEventListener("mousedown",x1);
+	document.body.appendChild(i1);
+}
+addbtn(()=>{texta.value=decodeURIComponent(texta.value);},"decodeURIComponent");
+addbtn(()=>{texta.value=encodeURIComponent(texta.value);},"encodeURIComponent");
+addbtn(()=>{texta.value=(texta.value).replace(" ",";").replace("\n",";");},"replace with ';'");
+
 function playtext(){
 	var s=texta.value;
 	s=(function(x){
