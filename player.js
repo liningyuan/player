@@ -8,7 +8,7 @@ function playsound(freq=440,len=1000,start=0){
 	var real=new Float32Array(32);
 	var imag=new Float32Array(32);
 	//   for(var i=1;i<=31;++i)real[i]=i;
-	real[1]=-24.9;real[2]=-30.4;real[3]=-40.9;real[4]=-33;real[5]=-41.3;real[6]=-40;
+	real[1]=-24.9;real[2]=-29.4;real[3]=-40.9;real[4]=-33;real[5]=-41.3;real[6]=-40;
 	for(var i=1;i<=6;++i)real[i]=10**(real[i]/20);
 	for(var i=7;i<=8;++i)real[i]=real[i-1]*0.9;
 	//   24.9 26.4 -40.9 -33 -41.3 -40
@@ -74,7 +74,7 @@ function playtext(){
 				//settings
 				return;
 			}
-			if(x0[0]<'0'||x0[0]>'9'){
+			if((x0[0]<'0'||x0[0]>'9')&&(x0[0]!=='-')){
 				console.warn(x0);
 				return;
 			}
@@ -83,7 +83,7 @@ function playtext(){
 				for(i2=0;(i1<x0.length)&&(x0[i1]>='0'&&x0[i1]<='9');++i1)i2=i2*10-x0.charCodeAt(i1)+48;
 			}else for(i2-=48;(i1<x0.length)&&(x0[i1]>='0'&&x0[i1]<='9');++i1)i2=i2*10+x0.charCodeAt(i1)-48;
 			ret.push(i2);
-			if(x0[i1]==','){
+			if(x0[i1]==','||x0[i1]=='+'){
 				i2=0;
 				for(++i1;(i1<x0.length)&&(x0[i1]>='0'&&x0[i1]<='9');++i1)i2=i2*10+x0.charCodeAt(i1)-48;
 			}else if(x0[i1]=='=')for(i2=1;i1+i2<x0.length&&x0[i1+i2]=='=';++i2);
@@ -100,7 +100,7 @@ function playtext(){
 		return ret;
 	})(s);
 	s.push(-233);
-	// console.log(s);
+	console.log(s);
 	if(Number(inpb.value)>0)bpm=Number(inpb.value);
 	else bpm=defbpm;
 	var i1,i2;
